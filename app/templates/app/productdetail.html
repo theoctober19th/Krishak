@@ -1,0 +1,62 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}Product Detail{% endblock title %}
+{% block main-content %}
+<div class="container my-5">
+ <div class="row">
+  <div class="col-sm-6 text-center align-self-center">
+   <img src="{{ product.product_image.url }}" alt="" class="img-fluid img-thumbnail">
+  </div>
+  <div class="col-sm-5 offset-sm-1">
+   <h4>Product Title: {{product.title}}</h4>
+   <br/>
+   
+   
+   <span class="heading">Rating:</span>
+    <span class="fa fa-star checked"></span>
+    <span class="fa fa-star checked"></span>
+    <span class="fa fa-star checked"></span>
+    <span class="fa fa-star checked"></span>
+    <span class="fa fa-star"></span>
+
+    <style>
+        .checked {
+  color: orange;
+}
+
+    </style>
+    <br/>
+    <br/>
+    <span class="heading">Brand:<b> Krishak Grocery</b></span>
+    <br/>
+    <br/>
+ 
+   <h4> {{product.selling_price}} </h4> <br>
+
+    {% if request.user.is_authenticated %}
+        {% if item_already_in_cart %}
+        <a href="{% url 'showcart' %}" class="btn btn-warning shadow px-5 py-2 ms-4">Go To Cart</a>
+            {% else %}
+
+                <form action="/add-to-cart" class="d-inline">
+                        <input type="hidden" name="prod_id" value={{product.id}}  id="prod_id">
+                        <button type="submit" class="btn btn-primary shadow px-5 py-2">Add To Cart</button>
+                    </form>
+            {% endif %} 
+    {% endif %}       
+    
+    {% if not request.user.is_authenticated %}
+                    
+        <form action="/add-to-cart" class="d-inline">
+            <input type="hidden" name="prod_id" value={{product.id}}  id="prod_id">
+            <button type="submit" class="btn btn-primary shadow px-5 py-2">Add To Cart</button>
+        </form>
+    {% endif %}
+
+
+   <a href="{% url 'showcart' %}" class="btn btn-danger shadow px-5 py-2 ms-4">Buy Now</a>
+ 
+  </div>
+ </div>
+</div>
+{% endblock main-content %}

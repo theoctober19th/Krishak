@@ -1,0 +1,33 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}Mobile{% endblock title %}
+{% block main-content %}
+<div class="container my-5">
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="list-group">
+                <a href="{% url 'vegetables'  %}" class="list-group-item list-group-item-action" aria-current="true">All Vegetables</a>
+                <a href="{% url 'vegetablesdata' 'Seasonal' %}" class="list-group-item list-group-item-action">Seasonal</a>
+                <a href="{% url 'vegetablesdata' 'Leafy' %}" class="list-group-item list-group-item-action">Leafy</a>
+
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <div class="row">
+                {% for product in vegetables %}
+                <div class="col-sm-4 text-center mb-4">
+                    <a href="{% url 'product-detail' product.id %}" class="btn">
+                        <div class="item">
+                            <img src="{{product.product_image.url}}" alt="" height="300">
+                            <div class="fw-bold">{{product.title}}</div>
+                            <div class="fw-bold">{{product.selling_price}}</div>
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock main-content %}
